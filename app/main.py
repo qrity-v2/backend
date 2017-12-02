@@ -5,6 +5,7 @@ import logging.config
 import json
 
 import mongoengine
+import redis
 from flask import Flask
 from flask import Response
 from flask import jsonify
@@ -29,6 +30,8 @@ class BaseFlaskApp(Flask):
 
     def get_db(self):
         self.db = mongoengine.connect(**self.config['MONGO'])
+        self.redis_pool = redis.ConnectionPool(**self.config['REDIS'])
+        self.redis = redis.Redis(connection_pool=self.redis_pool)
 
     def load_error_handler(self):
         self.register_error_handler(
@@ -64,8 +67,8 @@ def get_app(klass):
     from app.reviews.views import reviews_api
     flask_app.register_blueprint(reviews_api)
 
-    # from app.shorter.views import links_api
-    # flask_app.register_blueprint(links_api)
+    from app.shorter.views import links_api
+    flask_app.register_blueprint(links_api)
 
     return flask_app
 

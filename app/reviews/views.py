@@ -36,18 +36,15 @@ def save_review():
 
 @reviews_api.route('/review/params/', methods=['GET'])
 def get_form_params():
-    shop_id = request.form.get('shop_id')
-    user_id = request.form.get('user_id')
-    # TODO: запросить у евотора имя магазина с этими параметрами
-
     return {
         'result': {
-            'shop_name': u'Кофейня №1 в Москве',
             'tags_bad': [
                 u'грубят',
                 u'грязно',
                 u'не вкусно',
                 u'обманули',
+                u'длительное ожидание',
+                u'не соответствует ожиданиям',
             ],
             'tags_good': [
                 u'вкусно',

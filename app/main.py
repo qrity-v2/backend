@@ -10,6 +10,7 @@ from flask import Flask
 from flask import Response
 from flask import jsonify
 from werkzeug.exceptions import HTTPException
+from telegram import Bot
 
 from app.errors import ApiException
 
@@ -35,6 +36,7 @@ class BaseFlaskApp(Flask):
         self.db = mongoengine.connect(**self.config['MONGO'])
         self.redis_pool = redis.ConnectionPool(**self.config['REDIS'])
         self.redis = redis.Redis(connection_pool=self.redis_pool)
+        self.bot = Bot(token=self.config['TELEGRAM_TOKEN'])
 
     def load_error_handler(self):
         self.register_error_handler(

@@ -11,3 +11,5 @@ MONGO = {
     'port': 27017,
     'db': 'evotor',
 }
+
+TELEGRAM_TOKEN = '470400892:AAG0fNa574gh27CPq-9YKwsAsxjKqVMkjwA'

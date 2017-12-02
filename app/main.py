@@ -53,6 +53,8 @@ class BaseFlaskApp(Flask):
                     rv = json.dumps(rv, ensure_ascii=False)
             except TypeError:
                 pass
+
+        # Access-Control-Allow-Origin=*
         return super(BaseFlaskApp, self).make_response((rv, status, headers))
 
 
@@ -72,6 +74,11 @@ def get_app(klass):
 
     from app.evotor.views import evotor_api
     flask_app.register_blueprint(evotor_api)
+
+    @flask_app.after_request
+    def apply_caching(response):
+        response.headers["Access-Control-Allow-Origin"] = "*"
+        return response
 
     return flask_app
 

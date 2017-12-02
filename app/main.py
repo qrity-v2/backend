@@ -48,8 +48,8 @@ class BaseFlaskApp(Flask):
         # Это хуёво, но это MVP
         with open(os.path.join(BASE_DIR, 'templates/form_template.html')) as f:
             self.form_template = f.read()
-        # with open(os.path.join(BASE_DIR, 'templates/iframe_template.html')) as f:
-        #     self.iframe_template = f.read()
+        with open(os.path.join(BASE_DIR, 'templates/iframe_template.html')) as f:
+            self.iframe_template = f.read()
 
     def make_response(self, rv):
         if isinstance(rv, (self.response_class, Response)):

@@ -12,13 +12,11 @@ evotor_api = Blueprint('evotor_api', __name__)
 def short_link():
     """ Эвотор запрашивает этот метод чтобы отобразить iFrame
 
-        http://78.155.199.101:5000/evotor/?token={token}&uid={uid}
+        https://bot-maxim.com/evotor/?token=${token}&uid=${uid}
     """
     # идентификатор пользователя в облаке Эвотор
     uid = request.args.get('uid')
     # токен пользователя, для авторизации запросов к REST API Эвотор
     token = request.args.get('token')
-
-    print request.args
 
     return 'test'

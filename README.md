@@ -41,7 +41,7 @@ POST /short/
 
 Пример запроса:
 ```
-curl -X POST 'http://78.155.199.101:5000/short/' -d 'url=https://vk.com/memes_bot'
+curl -X POST 'http://78.155.199.101/short/' -d 'url=https://vk.com/memes_bot'
 ```
 Пример ответа:
 ```
@@ -61,7 +61,7 @@ GET /review/params/
 
 Пример запроса:
 ```
-curl 'http://78.155.199.101:5000/review/params/'
+curl 'http://78.155.199.101/review/params/'
 ```
 
 Пример ответа:
@@ -101,7 +101,7 @@ POST /review/
 
 Пример запроса:
 ```
-curl -X POST 'http://78.155.199.101:5000/review/' -d 'shop_id=1&user_id=1&rating=4&tags=хамят&text=ну+ваще&tags=грязно'
+curl -X POST 'http://78.155.199.101/review/' -d 'shop_id=1&user_id=1&rating=4&tags=хамят&text=ну+ваще&tags=грязно'
 ```
 
 Ответ в случае успеха:

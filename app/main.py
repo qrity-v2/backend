@@ -14,6 +14,9 @@ from werkzeug.exceptions import HTTPException
 from app.errors import ApiException
 
 
+BASE_DIR = os.path.dirname(__file__)
+
+
 def handle_exception_with_as_dict_method(error):
     if isinstance(error, ApiException):
         return jsonify(error.jsonify())
@@ -38,6 +41,11 @@ class BaseFlaskApp(Flask):
             ApiException,
             handle_exception_with_as_dict_method
         )
+
+    def load_static_templates(self):
+        # Это хуёво, но это MVP
+        with open(os.path.join(BASE_DIR, 'templates/form_template.html')) as f:
+            self.form_template = f.read()
 
     def make_response(self, rv):
         if isinstance(rv, (self.response_class, Response)):
@@ -65,6 +73,7 @@ def get_app(klass):
 
     flask_app.get_db()
     flask_app.load_error_handler()
+    flask_app.load_static_templates()
 
     from app.reviews.views import reviews_api
     flask_app.register_blueprint(reviews_api)
@@ -88,4 +97,4 @@ def uwsgi_app():
 
 
 if __name__ == '__main__':
-    uwsgi_app().run(host='0.0.0.0')
+    uwsgi_app().run(host='127.0.0.1')

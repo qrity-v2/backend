@@ -1,6 +1,8 @@
 # coding: utf-8
 from flask import Blueprint
+from flask import current_app
 from flask import request
+from flask import Response
 
 from app.errors import BadFormException
 from app.reviews.models import ReviewStorage
@@ -54,3 +56,10 @@ def get_form_params():
             ],
         }
     }
+
+
+@reviews_api.route('/f/', methods=['GET'])
+def render_form():
+    """ Отдать статическую страницу формочки оценивания
+    """
+    return Response(current_app.form_template, status=200)

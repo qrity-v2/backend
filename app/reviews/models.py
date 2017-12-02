@@ -20,10 +20,10 @@ class ReviewStorage(Document):
         required=True,
         primary_key=True,
     )
-    shop_id = IntField(
+    shop_id = StringField(
         required=True,
     )
-    user_id = IntField(
+    user_id = StringField(
         required=True,
     )
     rating = IntField(

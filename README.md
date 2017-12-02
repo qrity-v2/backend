@@ -150,7 +150,7 @@ curl -X POST 'http://78.155.199.101/review/' -d 'shop_id=1&user_id=1&rating=4&ta
 -------------------------
 
 ```
-GET /report/
+GET /evotor/report/
 ```
 
 Параметры запроса:

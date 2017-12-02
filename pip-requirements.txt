@@ -1,0 +1,7 @@
+redis==2.10.5
+requests==2.13.0
+flask==0.12
+gevent==1.2.1
+uwsgi==1.9.15
+python-telegram-bot==8.1.1
+mongoengine==0.15.0

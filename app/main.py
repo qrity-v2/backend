@@ -70,6 +70,9 @@ def get_app(klass):
     from app.shorter.views import links_api
     flask_app.register_blueprint(links_api)
 
+    from app.evotor.views import evotor_api
+    flask_app.register_blueprint(evotor_api)
+
     return flask_app
 
 

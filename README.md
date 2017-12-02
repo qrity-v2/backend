@@ -52,6 +52,40 @@ curl -X POST 'http://78.155.199.101/short/' -d 'url=https://vk.com/memes_bot'
 }
 ```
 
+Получить полную ссылку
+----------------------
+
+```
+GET /s/<key>
+```
+
+Где key - получен при сокращении ссылки
+
+Ответ - 302-редирект на полную ссылку
+
+Пример:
+```
+curl -vvv 'http://78.155.199.101/s/07046'
+
+* Hostname was NOT found in DNS cache
+*   Trying 78.155.199.101...
+* Connected to 78.155.199.101 (78.155.199.101) port 80 (#0)
+> GET /s/07046 HTTP/1.1
+> User-Agent: curl/7.38.0
+> Host: 78.155.199.101
+> Accept: */*
+>
+< HTTP/1.1 302 FOUND
+* Server nginx/1.4.6 (Ubuntu) is not blacklisted
+< Server: nginx/1.4.6 (Ubuntu)
+< Date: Sat, 02 Dec 2017 15:52:46 GMT
+< Content-Type: text/html; charset=utf-8
+< Content-Length: 255
+< Connection: keep-alive
+< Location: https://vk.com/memes_bot
+< Access-Control-Allow-Origin: *
+```
+
 Получить параметры для отображения формы
 ----------------------------------------
 

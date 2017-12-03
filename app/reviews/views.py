@@ -6,6 +6,8 @@ from flask import Response
 from telegram.parsemode import ParseMode
 
 from app.errors import BadFormException
+from app.evotor.client import EvotorClient
+from app.evotor.functions import get_user_token
 from app.reviews.models import ReviewStorage
 
 
@@ -64,8 +66,22 @@ https://market.evotor.ru/#/user/apps/7c2ce653-c50a-4ca5-a1af-afae3ce18d1b?tab=0
 
 @reviews_api.route('/review/params/', methods=['GET'])
 def get_form_params():
+    shop_id = request.args.get('shop_id')
+    user_id = request.args.get('user_id')
+
+    # Если есть токен этого пользователя, то подгрузить имя магазина
+    shop_name = None
+    token = get_user_token(user_id=user_id)
+    if token is not None:
+        client = EvotorClient(token=token)
+        shops = client.get_shop_list()
+        shops = filter(lambda i: i['uuid'] == shop_id, shops)
+        if len(shops) == 1:
+            shop_name = shops[0]['name']
+
     return {
         'result': {
+            'shop_name': shop_name,
             'tags_bad': [
                 u'грубят',
                 u'грязно',

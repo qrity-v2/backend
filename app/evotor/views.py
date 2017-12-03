@@ -34,6 +34,15 @@ def save_new_client():
 
     if user_id and token:
         save_user_token(user_id=user_id, token=token)
+        # спарсить всех работников и сохранить этот токен и им тоже
+        # TODO: "в будущем" запускать парсинг регулярно
+        try:
+            cli = EvotorClient(token=token, uid=user_id)
+            employers = cli.get_employers_list()
+            for item in employers:
+                save_user_token(user_id=item['uuid'], token=token)
+        except Exception as e:
+            print 'error:', e
         return {'result': 'ok'}
     else:
         raise BadFormException

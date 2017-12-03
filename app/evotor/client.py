@@ -8,7 +8,7 @@ import requests
 
 class EvotorClient(object):
     TEST_UID = '01-000000000544555'
-    TEST_TOKEN = 'a705a157-039c-47cc-9515-f93bd24c81a6'
+    TEST_TOKEN = 'cdaa975d-8eac-4d25-bdad-3906cceeb5cc'
 
     def __init__(self, token=None, uid=None):
         self.token = token

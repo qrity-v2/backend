@@ -15,9 +15,6 @@ from telegram import Bot
 from app.errors import ApiException
 
 
-BASE_DIR = os.path.dirname(__file__)
-
-
 def handle_exception_with_as_dict_method(error):
     if isinstance(error, ApiException):
         return jsonify(error.jsonify())
@@ -46,9 +43,12 @@ class BaseFlaskApp(Flask):
 
     def load_static_templates(self):
         # Это хуёво, но это MVP
-        with open(os.path.join(BASE_DIR, 'templates/form_template.html')) as f:
+        base_dir = os.path.dirname(__file__)
+        with open(os.path.join(base_dir, 'templates/form_template.html')) as f:
             self.form_template = f.read()
-        with open(os.path.join(BASE_DIR, 'templates/iframe_template.html')) as f:
+
+        base_dir = os.path.dirname(os.path.dirname(__file__))
+        with open(os.path.join(base_dir, 'static/admin/index.html')) as f:
             self.iframe_template = f.read()
 
     def make_response(self, rv):

@@ -8,6 +8,7 @@ from flask import Response
 
 from app.errors import BadFormException
 from app.evotor.client import EvotorClient
+from app.evotor.functions import save_user_token
 from app.reviews.models import ReviewStorage
 
 
@@ -21,6 +22,21 @@ def evotor_iframe():
         https://bot-maxim.com/evotor/?token=${token}&uid=${uid}
     """
     return Response(current_app.iframe_template, status=200)
+
+
+@evotor_api.route('/evotor/auth/', methods=['POST'])
+def save_new_client():
+    """ Облако должно дёрнуть этот метод при установке нового приложения из стора
+    """
+    data = request.get_json()
+    user_id = data.get('userId')
+    token = data.get('token')
+
+    if user_id and token:
+        save_user_token(user_id=user_id, token=token)
+        return {'result': 'ok'}
+    else:
+        raise BadFormException
 
 
 @evotor_api.route('/evotor/crutch/', methods=['POST'])

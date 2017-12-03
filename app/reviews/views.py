@@ -45,12 +45,37 @@ def save_review():
 
     # Если плохо, отправить отчёт в Telegram
     if rating and rating <= 3:
-        report_body = u'''
+        shop_name = None
+        user_name = None
+        token = get_user_token(user_id=user_id)
+        if token is not None:
+            client = EvotorClient(token=token)
+            shops = client.get_shop_list()
+            shops = filter(lambda i: i['uuid'] == shop_id, shops)
+            if len(shops) == 1:
+                shop_name = shops[0]['name']
+
+            users = client.get_employers_list()
+            users = filter(lambda i: i['uuid'] == user_id, users)
+            if len(users) == 1:
+                user_name = u'{} {}'.format(users[0]['name'], users[0]['lastName']).strip()
+
+        if not all([shop_name, user_name]):
+            report_body = u'''
 Вам оставили оценку *{}* за *{}*
 
 Посмотреть подробнее на сайте Эвотора:  
 https://market.evotor.ru/#/user/apps/7c2ce653-c50a-4ca5-a1af-afae3ce18d1b?tab=0
 '''.format(rating, u', '.join(tags))
+        else:
+            report_body = u'''
+В магазине *{}* в смену *{}*
+вам оставили оценку *{}* за *{}*
+
+Посмотреть подробнее на сайте Эвотора:  
+https://market.evotor.ru/#/user/apps/7c2ce653-c50a-4ca5-a1af-afae3ce18d1b?tab=0
+'''.format(shop_name, user_name, rating, u', '.join(tags))
+
         for tg_id in TELEGRAM_REPORT:
             try:
                 current_app.bot.send_message(
